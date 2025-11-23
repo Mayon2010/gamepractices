@@ -17,7 +17,18 @@ class NotesApp:
         
         self.current_folder = None
         self.current_note = None
-        
+
+        # Assets folder and icon loading (icons must be kept referenced on the instance)
+        self.assets_folder = "notesassets"
+        self.icons = {}
+        for key in ("create", "open", "exit", "save_note", "save", "back", "folder", "note", "delete", "export"):
+            path = os.path.join(self.assets_folder, f"{key}.png")
+            try:
+                self.icons[key] = tk.PhotoImage(file=path)
+            except Exception:
+                # If loading fails, set None — buttons will show text only
+                self.icons[key] = None
+
         # Show home screen
         self.show_home_screen()
     
@@ -38,8 +49,13 @@ class NotesApp:
         create_btn = tk.Button(
             self.root,
             text="Create New Note",
+            image=self.icons.get('create'),
+            compound='left',
             font=("Arial", 12),
-            width=20,
+            width=30,
+            padx=8,
+            pady=6,
+            anchor='w',
             command=self.show_create_note_screen
         )
         create_btn.pack(pady=10)
@@ -48,8 +64,13 @@ class NotesApp:
         open_btn = tk.Button(
             self.root,
             text="Open Existing Notes",
+            image=self.icons.get('open'),
+            compound='left',
             font=("Arial", 12),
-            width=20,
+            width=30,
+            padx=8,
+            pady=6,
+            anchor='w',
             command=self.show_folders_screen
         )
         open_btn.pack(pady=10)
@@ -58,8 +79,13 @@ class NotesApp:
         exit_btn = tk.Button(
             self.root,
             text="Exit",
+            image=self.icons.get('exit'),
+            compound='left',
             font=("Arial", 12),
-            width=20,
+            width=30,
+            padx=8,
+            pady=6,
+            anchor='w',
             command=self.root.quit
         )
         exit_btn.pack(pady=10)
@@ -130,6 +156,8 @@ class NotesApp:
         save_btn = tk.Button(
             self.root,
             text="Save Note",
+            image=self.icons.get('save_note'),
+            compound='left',
             font=("Arial", 10),
             command=save_note
         )
@@ -139,6 +167,8 @@ class NotesApp:
         back_btn = tk.Button(
             self.root,
             text="Back",
+            image=self.icons.get('back'),
+            compound='left',
             font=("Arial", 10),
             command=self.show_home_screen
         )
@@ -163,16 +193,23 @@ class NotesApp:
                 btn = tk.Button(
                     self.root,
                     text=folder,
+                    image=self.icons.get('folder'),
+                    compound='left',
                     font=("Arial", 11),
-                    width=30,
+                    padx=8,
+                    pady=6,
+                    anchor='w',
                     command=lambda f=folder: self.show_notes_in_folder(f)
                 )
-                btn.pack(pady=5)
+                # let the button expand horizontally so long folder names are visible
+                btn.pack(pady=5, fill='x', padx=20)
         
         # Back button
         back_btn = tk.Button(
             self.root,
             text="Back",
+            image=self.icons.get('back'),
+            compound='left',
             font=("Arial", 10),
             command=self.show_home_screen
         )
@@ -201,16 +238,23 @@ class NotesApp:
                 btn = tk.Button(
                     self.root,
                     text=note_name,
+                    image=self.icons.get('note'),
+                    compound='left',
                     font=("Arial", 11),
-                    width=30,
+                    padx=8,
+                    pady=6,
+                    anchor='w',
                     command=lambda n=note_name: self.show_note_screen(folder_name, n)
                 )
-                btn.pack(pady=5)
+                # expand so long note names aren't cut off
+                btn.pack(pady=5, fill='x', padx=20)
         
         # Back button
         back_btn = tk.Button(
             self.root,
             text="Back",
+            image=self.icons.get('back'),
+            compound='left',
             font=("Arial", 10),
             command=self.show_folders_screen
         )
@@ -255,6 +299,8 @@ class NotesApp:
         save_btn = tk.Button(
             button_frame,
             text="Save",
+            image=self.icons.get('save'),
+            compound='left',
             font=("Arial", 10),
             command=save_changes
         )
@@ -271,6 +317,8 @@ class NotesApp:
         delete_btn = tk.Button(
             button_frame,
             text="Delete",
+            image=self.icons.get('delete'),
+            compound='left',
             font=("Arial", 10),
             command=delete_note
         )
@@ -290,6 +338,8 @@ class NotesApp:
         export_btn = tk.Button(
             button_frame,
             text="Export",
+            image=self.icons.get('export'),
+            compound='left',
             font=("Arial", 10),
             command=export_note
         )
@@ -299,6 +349,8 @@ class NotesApp:
         back_btn = tk.Button(
             self.root,
             text="Back",
+            image=self.icons.get('back'),
+            compound='left',
             font=("Arial", 10),
             command=lambda: self.show_notes_in_folder(folder_name)
         )
