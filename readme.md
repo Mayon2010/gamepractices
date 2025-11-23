@@ -163,3 +163,138 @@ Example:
 
 ## License
 This project is provided for educational purposes and is released under the MIT License.
+
+# Notes App — `notestest.py`
+
+A small desktop Notes application written in Python using Tkinter. It provides a simple UI to create, edit, delete, export, and organize plain-text notes into folders. This README documents the app, how to run it, the supporting scripts and folders (`notes/`, `notesassets/`, and `generate_notesassets.py`), and troubleshooting tips.
+
+---
+
+## Overview
+
+- **Primary script**: `notestest.py` — Tkinter-based GUI application (single-file, minimal dependencies).
+- **Assets folder**: `notesassets/` — contains small PNG icons used by the UI.
+- **Notes storage**: `notes/` — a folder containing subfolders (e.g., `General/`) with `.txt` note files.
+- **Helper script**: `generate_notesassets.py` — generates placeholder PNG icons (requires Pillow).
+
+The app uses only the Python standard library (Tkinter) for runtime UI; the icon generator uses Pillow if you want to create/update icons.
+
+## Features
+
+- Create new plain-text notes and save them into named folders.
+- Browse existing folders and notes.
+- Edit, save, delete, and export notes to arbitrary file paths.
+- Lightweight icon support — if `notesassets/` contains PNG icons the UI will load them; missing icons fall back to text-only buttons.
+- Automatic creation of a default `General` folder when none exist.
+
+## Requirements
+
+- Python 3.7+ (Tkinter included with standard Python installations on Windows/macOS/Linux).
+- Optional: `Pillow` (PIL) to run `generate_notesassets.py`.
+
+Install Pillow (optional) using PowerShell on Windows:
+
+```powershell
+python -m pip install --upgrade pip
+python -m pip install pillow
+```
+
+## Folder Structure
+
+- `notestest.py` — main application.
+- `generate_notesassets.py` — script to generate placeholder icons (uses Pillow).
+- `notes/` — runtime folder where note subfolders and `.txt` files are stored. Example layout:
+  - `notes/General/*.txt`
+  - `notes/testing/test2.txt`
+- `notesassets/` — icon files used by the UI (e.g., `create.png`, `open.png`, `save.png`, etc.).
+
+The repository currently includes example assets in `notesassets/` and example content under `notes/General` and `notes/testing/`.
+
+## Running the App
+
+Run the application from the project root (the same folder that contains `notestest.py`). Example PowerShell command:
+
+```powershell
+python notestest.py
+```
+
+Behavior on first run:
+
+- The app will create a `notes/` directory (if it doesn't exist) and ensure a `General` folder exists.
+- If `notesassets/` contains PNG files named like `create.png`, `open.png`, etc., the UI will use them; otherwise the app will display text-only buttons.
+
+## generate_notesassets.py — Create placeholder icons
+
+`generate_notesassets.py` creates simple 32x32 PNG icons into `notesassets/` for use by the UI. Usage:
+
+```powershell
+python generate_notesassets.py
+```
+
+- Requires `Pillow` (`pip install pillow`).
+- The script writes several files such as `create.png`, `open.png`, `save.png`, `back.png`, etc.
+- These are intentionally simple placeholders and work well for prototyping.
+
+## Notes App Behavior & UX
+
+- Creating a note: choose a name, select an existing folder or choose "New Folder" and provide a folder name. The note content is saved as a `.txt` file in the chosen folder.
+- Opening notes: the app lists folders from `notes/` and displays `.txt` notes in the selected folder.
+- Editing notes: save writes changes back to the existing `.txt` file.
+- Deleting notes: removes the `.txt` file from disk (confirmation dialog shown).
+- Exporting notes: saves a copy to a user-selected path via a Save dialog.
+
+## Example Walkthrough (Windows PowerShell)
+
+1. Generate icons (optional):
+
+```powershell
+python generate_notesassets.py
+```
+
+2. Start the Notes App:
+
+```powershell
+python notestest.py
+```
+
+3. Create a new note, save it in `General`, then open and export it via the UI.
+
+## Troubleshooting
+
+- If the UI shows text-only buttons, confirm that `notesassets/` contains the named PNG files: `create.png`, `open.png`, `exit.png`, `save_note.png`, `save.png`, `back.png`, `folder.png`, `note.png`, `delete.png`, `export.png`.
+- If icons fail to load and you want a clean regeneration, install `Pillow` and run `generate_notesassets.py`.
+- On file write errors, ensure you have write permissions to the project directory and that no other program is locking the file.
+- If Tkinter is not available on your Python install, install a standard CPython distribution or ensure the `python` you run includes Tkinter (on some Linux distributions you may need `sudo apt install python3-tk`).
+
+## Security & Data Considerations
+
+- Notes are stored as plain text (`.txt`) with no encryption. Do not store secrets in these files.
+- Deletion is permanent (file is removed from disk). Consider manually backing up the `notes/` folder.
+
+## Contributing & Improvements
+
+If you want to improve the app, suggested enhancements:
+
+- Add search across notes and folders.
+- Add optional encryption or password-protection for private notes.
+- Add note metadata (created/modified timestamps) and show them in the UI.
+- Add import/export in other formats (Markdown, JSON) and batch operations.
+- Add unit tests for helper functions (folder and note listing) and automation scripts.
+
+To propose changes:
+
+1. Fork the repo and create a feature branch.
+2. Open a pull request with a clear description of changes and rationale.
+
+## License
+
+This application and supporting scripts are provided for educational purposes. Unless otherwise specified in repository metadata, treat the code as available under the MIT license for personal and educational use.
+
+---
+
+# Other Projects
+
+This repository also contains other projects (games and experiments). See the older sections below for details on those projects. The Notes App documentation above is the recommended starting point if you're exploring the `notestest.py` functionality and related assets.
+
+<!-- End of file -->
+```
